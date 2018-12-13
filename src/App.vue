@@ -11,6 +11,7 @@
         </nav>
     </header>
     <main>
+        Ma fellow Crazy Bot
       <RobotBuilder/>
     </main>
   </div>
@@ -28,9 +29,12 @@ export default {
 </script>
 
 <style>
-body {
-  background:linear-gradient(to bottom, #555, #999) fixed;
-}
+  body {
+    background:linear-gradient(to bottom, #555, #999) fixed;
+  }
+</style>
+
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }

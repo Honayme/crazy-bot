@@ -1,6 +1,12 @@
 <template>
   <div class="content">
     <div class="preview">
+      <CollapsibleSection>
+        <!--Even an empty div is enougth to not display the default content-->
+        <!--<div></div>-->
+        <!--Default content is shown cuz there is nothing here except comment-->
+      </CollapsibleSection>
+      <CollapsibleSection>
       <div class="preview-content">
         <div class="top-row">
           <img :src="selectedRobot.head.src"/>
@@ -14,6 +20,7 @@
           <img :src="selectedRobot.base.src"/>
         </div>
       </div>
+      </CollapsibleSection>
       <button class="add-to-cart" @click="addToCart()">Add to Cart</button>
     </div>
     <div class="top-row">
@@ -70,10 +77,11 @@
 import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
+import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default{
   name: 'RobotBuilder',
-  components: { PartSelector },
+  components: { PartSelector, CollapsibleSection },
   data() {
     return {
       availableParts,

@@ -15,7 +15,7 @@ export default {
   computed: {
     part() {
       const { partType, id } = this.$route.params;
-      return parts[partType].find(parts => parts.id === id );
+      return parts[partType].find(parts => parts.id === +id );
     },
   },
 };

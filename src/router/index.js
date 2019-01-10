@@ -14,6 +14,7 @@ import SidebarBuild from '../sidebars/SidebarBuild.vue';
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [{
     path: '/',
     name: 'Home',
@@ -59,5 +60,10 @@ export default new Router({
     name: 'Parts',
     component: PartInfo,
     props: true,
+    // Route guard allow to prevent navigate with a non integer inside the URL
+    beforeEnter(to, from, next) {
+      const isValidId = Number.isInteger(Number(to.params.id));
+      next(isValidId);
+    },
   }],
 });

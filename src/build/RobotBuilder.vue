@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div v-if="availableParts" class="content">
     <div class="preview">
       <CollapsibleSection>
         <!--Even an empty div is enougth to not display the default content-->
@@ -53,34 +53,19 @@
         position="bottom"
         @partSelected="part => selectedRobot.base=part"/>
     </div>
-    <div>
-      <h1>Cart</h1>
-      <table>
-        <thead>
-        <tr>
-          <th>Robot</th>
-          <th class="cost">Cost</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(robot, index) in cart" :key="index">
-          <td>{{robot.head.title}}</td>
-          <td class="cost">{{robot.head.cost}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </template>
 
 <script>
-import availableParts from '../data/parts';
 import createdHookMixin from './created-hook-mixin';
 import PartSelector from './PartSelector.vue';
 import CollapsibleSection from '../shared/CollapsibleSection.vue';
 
 export default{
   name: 'RobotBuilder',
+  created() {
+    this.$store.dispatch('getParts');
+  },
   // Prevent to leave the page before your fill the condition to do so
   beforeRouteLeave(to, from, next) {
     if (this.addedToCart) {
@@ -95,7 +80,6 @@ export default{
   components: { PartSelector, CollapsibleSection },
   data() {
     return {
-      availableParts,
       cart: [],
       addedToCart: false,
       selectedRobot: {
@@ -109,6 +93,9 @@ export default{
   },
   mixins: [createdHookMixin],
   computed: {
+    availableParts() {
+      return this.$store.state.parts;
+    },
     saleBorderClass() {
       return this.selectedRobot.head.onSale
         ? 'sale-border'
@@ -131,11 +118,10 @@ export default{
         + robot.torso.cost
         + robot.rightArm.cost
         + robot.base.cost;
-      this.cart.push(Object.assign({}, robot, { cost }));
+      this.$store.commit('addRobotToCart', Object.assign({}, robot, { cost }));
       this.addedToCart = true;
       console.log(robot.head);
     },
-
   },
 };
 </script>
@@ -249,13 +235,7 @@ export default{
     padding: 3px;
     font-size: 16px;
   }
-  td, th {
-    text-align: left;
-    padding: 5px 20px 5px 5px;
-  }
-  .cost {
-    text-align: right;
-  }
+
   .sale-border {
     border: 3px solid red;
   }

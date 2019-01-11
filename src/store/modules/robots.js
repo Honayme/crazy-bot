@@ -1,9 +1,11 @@
 import axios from 'axios/index';
 
 export default {
+  namespaced: true,
   state: {
     cart: [],
     parts: null,
+    foo: 'robots-foo',
   },
   mutations: {
     addRobotToCart(state, robot) {
@@ -19,7 +21,7 @@ export default {
         .then(result => commit('updateParts', result.data))
         .catch(console.error);
     },
-    addRobotToCart({ commit, state}, robot) {
+    addRobotToCart({ commit, state }, robot) {
       const cart = [...state.cart, robot];
       return axios.post('/api/cart', cart)
         .then(() => commit ('addRobotToCart', robot));
@@ -28,6 +30,9 @@ export default {
   getters: {
     cartSaleItems(state) {
       return state.cart.filter(item => item.head.onSale);
+    },
+    foo(state) {
+      return `robot-getter/${state.foo}`;
     },
   },
 };

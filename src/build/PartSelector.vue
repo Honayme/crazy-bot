@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-pin="http://www.w3.org/1999/xhtml">
   <div class="part" :class="position">
     <router-link :to="{
         name: 'Parts',
@@ -10,7 +10,10 @@
     </router-link>
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
-    <span v-pin class="sale" v-show="selectedPart.onSale">Sale!</span>
+    <span v-pin="{ bottom: '10px', right: '5px' }"
+          class="sale" v-show="selectedPart.onSale">
+      Sale!
+    </span>
   </div>
 </template>
 

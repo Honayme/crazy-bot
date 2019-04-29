@@ -12,5 +12,7 @@ cd crazy-bot\server
 node index.js
   
 ```
+Test commit sur Master
 
+Test commit sur Commande
 
